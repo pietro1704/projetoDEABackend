@@ -7,12 +7,15 @@ import br.com.dea.management.user.repository.UserRepository;
 import br.com.dea.management.user.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 public class DeamanagementApplication implements CommandLineRunner {
@@ -46,15 +49,15 @@ public class DeamanagementApplication implements CommandLineRunner {
 			u.setLinkedin("linkedin " + i);
 			u.setPassword("pwd " + i);
 
-			Student student = new Student();
-			student.setUniversity("UNI " + i);
-			student.setGraduation("Grad " + i);
-			student.setFinishDate(LocalDate.now());
-			student.setUser(u);
+			Student student = Student.builder()
+					.university("UNI " + i)
+					.graduation("Grad " + i)
+					.finishDate(LocalDate.now())
+					.user(u)
+					.build();
 
 			this.studentRepository.save(student);
 		}
-
 
 	}
 }

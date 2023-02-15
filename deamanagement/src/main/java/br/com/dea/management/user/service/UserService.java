@@ -4,6 +4,8 @@ import br.com.dea.management.exceptions.NotFoundException;
 import br.com.dea.management.user.domain.User;
 import br.com.dea.management.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
@@ -21,21 +23,17 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    // Automatic Custom Query
+    public Page<User> findAllUsersPaginated(Integer page, Integer pageSize) {
+        return this.userRepository.findAllPaginated(PageRequest.of(page, pageSize));
+    }
+
     // Get User by id
     public User findUserById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
         return user.orElseThrow(() -> new NotFoundException(User.class, id));
     }
 
-    // Get Users email
-    public String findUserEmail(Long id) {
-        User user = this.findUserById(id);
-        return user.getEmail();
-    }
-
     // Get Users by email
-    @Query("SELECT u FROM User u WHERE email := email")
     public User findUserByEmail(String email) {
         Optional<User> user = this.userRepository.findByEmail(email);
         return user.orElseThrow(() -> new NotFoundException(User.class,

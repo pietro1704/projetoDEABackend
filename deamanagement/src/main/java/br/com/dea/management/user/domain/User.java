@@ -1,33 +1,38 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package br.com.dea.management.user.domain;
 
 import jakarta.persistence.*;
-@Entity
-@NamedQuery(name = "getUserName", query = "SELECT u FROM User u where u.name " +
-        "= :name")
-@NamedQuery(name = "getUserByLinkedin", query = "SELECT u FROM User u where u" +
-        ".linkedin " +
-        "= :linkedin")
-public class User {
 
+@Entity
+@NamedQueries({@NamedQuery(
+        name = "getUserName",
+        query = "SELECT u FROM User u where u.name = :name"
+), @NamedQuery(
+        name = "getUserByLinkedin",
+        query = "SELECT u FROM User u where u.linkedin = :linkedin"
+)})
+public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     @Column
     private Long id;
-
     @Column
     private String name;
-
     @Column
     private String email;
-
     @Column
     private String password;
-
     @Column
     private String linkedin;
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -35,7 +40,7 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -43,7 +48,7 @@ public class User {
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -51,7 +56,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -59,7 +64,7 @@ public class User {
     }
 
     public String getLinkedin() {
-        return linkedin;
+        return this.linkedin;
     }
 
     public void setLinkedin(String linkedin) {

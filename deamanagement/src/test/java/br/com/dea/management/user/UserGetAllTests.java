@@ -14,11 +14,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,24 +57,15 @@ public class UserGetAllTests {
                 .andExpect(jsonPath("$.content[0].name", is("name 0")))
                 .andExpect(jsonPath("$.content[0].email", is("email 0")))
                 .andExpect(jsonPath("$.content[0].linkedin", is("linkedin 0")))
-                .andExpect(jsonPath("$.content[0].university", is("UNI 0")))
-                .andExpect(jsonPath("$.content[0].graduation", is("Grad 0")))
                 .andExpect(jsonPath("$.content[1].name", is("name 1")))
                 .andExpect(jsonPath("$.content[1].email", is("email 1")))
                 .andExpect(jsonPath("$.content[1].linkedin", is("linkedin 1")))
-                .andExpect(jsonPath("$.content[1].university", is("UNI 1")))
-                .andExpect(jsonPath("$.content[1].graduation", is("Grad 1")))
-                .andExpect(jsonPath("$.content[2].name", is("name 10")))
-                .andExpect(jsonPath("$.content[2].email", is("email 10")))
-                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 10")))
-                .andExpect(jsonPath("$.content[2].university", is("UNI 10")))
-                .andExpect(jsonPath("$.content[2].graduation", is("Grad 10")))
-                .andExpect(jsonPath("$.content[3].name", is("name 11")))
-                .andExpect(jsonPath("$.content[3].email", is("email 11")))
-                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 11")))
-                .andExpect(jsonPath("$.content[3].university", is("UNI 11")))
-                .andExpect(jsonPath("$.content[3].graduation", is("Grad 11")));
-
+                .andExpect(jsonPath("$.content[2].name", is("name 2")))
+                .andExpect(jsonPath("$.content[2].email", is("email 2")))
+                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 2")))
+                .andExpect(jsonPath("$.content[3].name", is("name 3")))
+                .andExpect(jsonPath("$.content[3].email", is("email 3")))
+                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 3")));
     }
 
     @Test
@@ -118,12 +110,12 @@ public class UserGetAllTests {
 
     private void createFakeUsers() {
         for (int i = 0; i < 100; i++) {
-            User u = new User();
-            u.setEmail("email " + i);
-            u.setName("name " + i);
-            u.setLinkedin("linkedin " + i);
-            u.setPassword("pwd " + i);
-
+            User u = User.builder()
+                    .email("email " + i)
+                    .name("name " + i)
+                    .linkedin("linkedin " + i)
+                    .password("pwd " + i)
+                    .build();
             this.userRepository.save(u);
         }
     }

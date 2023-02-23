@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,6 +35,8 @@ public class UserGetAllTests {
 
     @BeforeEach
     void beforeEach() {
+        this.userRepository.deleteAll();
+        this.createFakeUsers();
         log.info("Before each test in " + UserGetAllTests.class.getSimpleName());
     }
 
@@ -45,10 +46,24 @@ public class UserGetAllTests {
     }
 
     @Test
-    void whenRequestingUserList_thenReturnListOfUserPaginatedSuccessfully() throws Exception {
-        this.userRepository.deleteAll();
-        this.createFakeUsers();
+    void whenRequestingUserAllRawList_thenReturnListOfUsers() throws Exception {
+        mockMvc.perform(get("/user/all"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(100)))
+                .andExpect(jsonPath("$[0].name", is("name 0")))
+                .andExpect(jsonPath("$[99].name", is("name 99")));
+    }
+    @Test
+    void whenRequestingUserAllRawDTOList_thenReturnListOfUsers() throws Exception {
+        mockMvc.perform(get("/user/without-pagination"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(containsString("name 0")));
+    }
 
+    @Test
+    void whenRequestingUserList_thenReturnListOfUserPaginatedSuccessfully() throws Exception {
         mockMvc.perform(get("/user?page=0&pageSize=4"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -60,12 +75,12 @@ public class UserGetAllTests {
                 .andExpect(jsonPath("$.content[1].name", is("name 1")))
                 .andExpect(jsonPath("$.content[1].email", is("email 1")))
                 .andExpect(jsonPath("$.content[1].linkedin", is("linkedin 1")))
-                .andExpect(jsonPath("$.content[2].name", is("name 2")))
-                .andExpect(jsonPath("$.content[2].email", is("email 2")))
-                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 2")))
-                .andExpect(jsonPath("$.content[3].name", is("name 3")))
-                .andExpect(jsonPath("$.content[3].email", is("email 3")))
-                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 3")));
+                .andExpect(jsonPath("$.content[2].name", is("name 10")))
+                .andExpect(jsonPath("$.content[2].email", is("email 10")))
+                .andExpect(jsonPath("$.content[2].linkedin", is("linkedin 10")))
+                .andExpect(jsonPath("$.content[3].name", is("name 11")))
+                .andExpect(jsonPath("$.content[3].email", is("email 11")))
+                .andExpect(jsonPath("$.content[3].linkedin", is("linkedin 11")));
     }
 
     @Test
@@ -109,6 +124,7 @@ public class UserGetAllTests {
     }
 
     private void createFakeUsers() {
+        log.info("creating fake users");
         for (int i = 0; i < 100; i++) {
             User u = User.builder()
                     .email("email " + i)
@@ -116,6 +132,11 @@ public class UserGetAllTests {
                     .linkedin("linkedin " + i)
                     .password("pwd " + i)
                     .build();
+            log.info("Saving user # %d", i);
+            log.info(String.format("Saving User name : %s", u.getName()));
+            log.info(String.format("Saving User email: %s", u.getEmail()));
+            log.info(String.format("Saving User linkedin: %s", u.getLinkedin()));
+            log.info(String.format("Saving User password: %s", u.getPassword()));
             this.userRepository.save(u);
         }
     }

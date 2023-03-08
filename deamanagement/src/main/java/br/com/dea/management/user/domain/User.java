@@ -1,7 +1,6 @@
 package br.com.dea.management.user.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity

@@ -44,11 +44,11 @@ class StudentUpdatePayloadValidationTests {
                 .andExpect(jsonPath("$.details").isArray())
                 .andExpect(jsonPath("$.details", hasSize(3)))
                 .andExpect(jsonPath("$.details[*].field", hasItem("name")))
-                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Name could not be null")))
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Name cannot be null")))
                 .andExpect(jsonPath("$.details[*].field", hasItem("email")))
-                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Email could not be null")))
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Email cannot be null")))
                 .andExpect(jsonPath("$.details[*].field", hasItem("password")))
-                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Password could not be null")));
+                .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Password cannot be null")));
     }
 
     @Test
@@ -57,7 +57,7 @@ class StudentUpdatePayloadValidationTests {
 
         String payload = "{" +
                 "\"name\": \"name\"," +
-                "\"email\": \"email\"," +
+                "\"email\": \"email@email.co\"," +
                 "\"linkedin\": \"linkedin\"," +
                 "\"university\": \"university\"," +
                 "\"graduation\": \"graduation\"," +

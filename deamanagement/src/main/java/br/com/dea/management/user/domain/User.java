@@ -27,7 +27,7 @@ public class User {
     private String email;
 
     @Column
-    @Min(value = 10, message = "Password must be at least 10 characters")
+    @Min(value = 3, message = "Password must be at least 3 characters")
     @NotNull(message = "Password cannot be null")
     private String password;
 

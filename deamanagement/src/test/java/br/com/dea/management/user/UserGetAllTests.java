@@ -128,7 +128,7 @@ public class UserGetAllTests {
                     .email("email " + i)
                     .name("name " + i)
                     .linkedin("linkedin " + i)
-                    .password("pwd " + i)
+                    .password("passwordpassword " + i)
                     .build();
             log.info("Saving user # %d", i);
             log.info(String.format("Saving User name : %s", u.getName()));

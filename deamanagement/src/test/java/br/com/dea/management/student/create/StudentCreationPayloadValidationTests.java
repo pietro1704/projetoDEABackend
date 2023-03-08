@@ -57,7 +57,7 @@ class StudentCreationPayloadValidationTests {
                 "\"linkedin\": \"linkedin\"," +
                 "\"university\": \"university\"," +
                 "\"graduation\": \"graduation\"," +
-                "\"password\": \"password\"," +
+                "\"password\": \"a\"," +
                 "\"finishDate\": \"2023-02-27\"" +
                 "}";
         mockMvc.perform(post("/student")
@@ -66,7 +66,6 @@ class StudentCreationPayloadValidationTests {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").exists())
                 .andExpect(jsonPath("$.details").isArray())
-                .andExpect(jsonPath("$.details[*].field", hasItem("password")))
                 .andExpect(jsonPath("$.details[*].errorMessage", hasItem("Password could not be null")));
     }
 

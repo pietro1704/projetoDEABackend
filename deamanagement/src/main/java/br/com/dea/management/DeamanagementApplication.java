@@ -46,10 +46,7 @@ public class DeamanagementApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		//Deleting all Users
-		this.userRepository.deleteAll();
-
-		//Creating some students
+		// Creating some students
 		for (int i = 0; i < 100; i++) {
 			User u = new User();
 			u.setEmail("email " + i);
@@ -63,8 +60,6 @@ public class DeamanagementApplication implements CommandLineRunner {
 					.finishDate(LocalDate.now())
 					.user(u)
 					.build();
-
-			this.studentRepository.save(student);
 		}
 
 	}

@@ -1,6 +1,7 @@
 package br.com.dea.management.user.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 @Entity
@@ -19,12 +20,15 @@ public class User {
     private Long id;
 
     @Column
+    @NotNull(message = "Name cannot be null")
     private String name;
 
     @Column
     private String email;
 
     @Column
+    @Min(value = 10, message = "Password must be at least 10 characters")
+    @NotNull(message = "Password cannot be null")
     private String password;
 
     @Column

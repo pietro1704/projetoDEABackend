@@ -2,6 +2,7 @@ package br.com.dea.management.student.domain;
 
 import br.com.dea.management.user.domain.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -30,6 +31,7 @@ public class Student {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @NotNull(message = "User cannot be null")
     private User user;
 
 }

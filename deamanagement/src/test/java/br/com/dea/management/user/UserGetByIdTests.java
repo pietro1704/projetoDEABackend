@@ -2,7 +2,6 @@ package br.com.dea.management.user;
 
 import br.com.dea.management.user.domain.User;
 import br.com.dea.management.user.repository.UserRepository;
-import br.com.dea.management.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
